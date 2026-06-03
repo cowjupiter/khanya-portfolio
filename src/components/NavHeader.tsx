@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const TABS = [
   { id: "home",     label: "Home" },
@@ -122,10 +122,12 @@ export const NavHeader = () => {
     <motion.nav
       layout
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
-      className={`relative flex items-center rounded-full border border-textMain/20 backdrop-blur-md shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] overflow-hidden transition-colors duration-300 ${
+      className={`relative flex rounded-full border border-textMain/20 backdrop-blur-md shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] overflow-hidden transition-colors duration-300 ${
         showIslandPill 
-          ? "p-1.5 cursor-pointer bg-black/95 dark:bg-white/95 text-white dark:text-black border-transparent shadow-xl" 
-          : "p-1 w-fit bg-textMain/5"
+          ? "p-1.5 items-center cursor-pointer bg-black/95 dark:bg-white/95 text-white dark:text-black border-transparent shadow-xl" 
+          : isMobile && isExpanded
+            ? "p-2 flex-col items-stretch rounded-[24px] bg-black/95 dark:bg-white/95 text-white dark:text-black border-transparent shadow-2xl min-w-[220px]"
+            : "p-1 items-center w-fit bg-textMain/5"
       }`}
       onClick={() => {
         if (showIslandPill) setIsExpanded(true);
@@ -151,12 +153,27 @@ export const NavHeader = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             ref={containerRef}
-            className="relative flex w-fit items-center"
-            onMouseLeave={() => setHoverStyle(null)}
+            className={`relative flex ${isMobile ? "flex-col w-full" : "w-fit items-center"}`}
+            onMouseLeave={() => !isMobile && setHoverStyle(null)}
           >
+            {isMobile && (
+              <div className="flex items-center justify-between w-full pl-4 pr-2 py-1.5 border-b border-white/10 dark:border-black/10 mb-2">
+                <span className="text-[10px] font-black uppercase tracking-widest text-white/40 dark:text-black/40">Menu</span>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsExpanded(false);
+                  }}
+                  className="text-white/70 hover:text-white dark:text-black/70 dark:hover:text-black p-1 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+
             {/* Hover pill */}
             <AnimatePresence>
-              {hoverStyle && (
+              {!isMobile && hoverStyle && (
                 <motion.div
                   key="hover"
                   className="absolute top-1 bottom-1 rounded-full bg-textMain/20 pointer-events-none"
@@ -170,16 +187,18 @@ export const NavHeader = () => {
             </AnimatePresence>
 
             {/* Active pill */}
-            <motion.div
-              className="absolute top-1 bottom-1 rounded-full bg-textMain pointer-events-none"
-              animate={activeStyle}
-              transition={{ type: "spring", stiffness: 400, damping: 35 }}
-              style={{
-                left: activeStyle.left,
-                width: activeStyle.width,
-                opacity: activeStyle.width > 0 ? 1 : 0,
-              }}
-            />
+            {!isMobile && (
+              <motion.div
+                className="absolute top-1 bottom-1 rounded-full bg-textMain pointer-events-none"
+                animate={activeStyle}
+                transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                style={{
+                  left: activeStyle.left,
+                  width: activeStyle.width,
+                  opacity: activeStyle.width > 0 ? 1 : 0,
+                }}
+              />
+            )}
 
             {TABS.map((tab, i) => {
               const isActive = tab.id === activeTab;
@@ -188,19 +207,29 @@ export const NavHeader = () => {
                   key={tab.id}
                   ref={(el) => { tabRefs.current[i] = el; }}
                   onMouseEnter={() => {
-                    const dim = measure(i);
-                    if (dim) setHoverStyle(dim);
+                    if (!isMobile) {
+                      const dim = measure(i);
+                      if (dim) setHoverStyle(dim);
+                    }
                   }}
-                  className="relative z-10"
+                  className={`relative z-10 ${isMobile ? "w-full" : ""}`}
                 >
                   <a
                     href={`#${tab.id}`}
                     onClick={(e) => handleClick(e, tab.id)}
-                    className={`block px-3 py-2.5 sm:px-4 md:px-5 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-semibold uppercase tracking-widest whitespace-nowrap select-none transition-colors duration-300 ${
-                      isActive 
-                        ? "text-main" 
-                        : "text-textMain/60 hover:text-textMain"
-                    }`}
+                    className={
+                      isMobile
+                        ? `block w-full px-4 py-2.5 text-center text-[10px] font-semibold uppercase tracking-widest select-none transition-all duration-300 rounded-xl ${
+                            isActive
+                              ? "bg-white text-black dark:bg-black dark:text-white shadow-sm scale-[1.02]"
+                              : "text-white/60 hover:text-white dark:text-black/60 dark:hover:text-black hover:bg-white/5 dark:hover:bg-black/5"
+                          }`
+                        : `block px-3 py-2.5 sm:px-4 md:px-5 md:py-2.5 text-[11px] sm:text-xs md:text-sm font-semibold uppercase tracking-widest whitespace-nowrap select-none transition-colors duration-300 ${
+                            isActive 
+                              ? "text-main" 
+                              : "text-textMain/60 hover:text-textMain"
+                          }`
+                    }
                   >
                     {tab.label}
                   </a>

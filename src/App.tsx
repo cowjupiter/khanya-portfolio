@@ -294,19 +294,21 @@ function App() {
             <div className="w-full h-full rounded-full liquid-orb blur-[70px] sm:blur-[100px] md:blur-[130px] opacity-45 dark:opacity-30 bg-gradient-to-tr from-rose-400 via-pink-400 to-amber-300 dark:from-indigo-600 dark:via-purple-500 dark:to-cyan-500 transition-all duration-500" />
           </div>
 
-          {/* Spline Canvas wrapper - strictly z-10 to stay in front of the liquid background */}
-          <motion.div 
-            className="relative z-10 w-full h-full pointer-events-auto"
-            animate={{ y: [0, -15, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <Suspense fallback={null}>
-              <Spline
-                scene="https://prod.spline.design/AamdgtFi4U53xPxO/scene.splinecode"
-                className="w-full h-full"
-              />
-            </Suspense>
-          </motion.div>
+          {/* Spline Canvas wrapper - strictly z-10 to stay in front of the liquid background - disabled on mobile */}
+          {!isMobileDevice && (
+            <motion.div 
+              className="relative z-10 w-full h-full pointer-events-auto"
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <Suspense fallback={null}>
+                <Spline
+                  scene="https://prod.spline.design/AamdgtFi4U53xPxO/scene.splinecode"
+                  className="w-full h-full"
+                />
+              </Suspense>
+            </motion.div>
+          )}
         </div>
       </section>
 
