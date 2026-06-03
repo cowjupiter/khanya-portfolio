@@ -11,44 +11,30 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({ text, className = ''
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start 0.8', 'end 0.2']
+    offset: ['start 0.85', 'end 0.25']
   });
 
   const words = text.split(' ');
-  const totalChars = text.length;
-  let charIndex = 0;
+  const totalWords = words.length;
 
   return (
     <p ref={containerRef} className={className}>
       {words.map((word, wordIdx) => {
-        const chars = word.split('');
+        const start = wordIdx / totalWords;
+        const end = start + (1.5 / totalWords); // Stagger word entry slightly
         
         return (
-          <React.Fragment key={wordIdx}>
-            <span className="inline-block whitespace-nowrap">
-              {chars.map((char, charIdx) => {
-                const currentIdx = charIndex++;
-                const start = currentIdx / totalChars;
-                const end = start + (1 / totalChars);
-                
-                return (
-                  <span key={charIdx} className="relative inline-block">
-                    <span className="opacity-0">{char}</span>
-                    <motion.span
-                      className="absolute left-0 top-0"
-                      style={{
-                        opacity: useTransform(scrollYProgress, [start, end], [0.2, 1])
-                      }}
-                    >
-                      {char}
-                    </motion.span>
-                  </span>
-                );
-              })}
-            </span>
-            {/* Standard space character enables browser text-justify layout spacing */}
-            {wordIdx < words.length - 1 && ' '}
-          </React.Fragment>
+          <span key={wordIdx} className="relative inline-block mr-[0.25em] last:mr-0">
+            <span className="opacity-0">{word}</span>
+            <motion.span
+              className="absolute left-0 top-0"
+              style={{
+                opacity: useTransform(scrollYProgress, [start, Math.min(end, 1)], [0.15, 1])
+              }}
+            >
+              {word}
+            </motion.span>
+          </span>
         );
       })}
     </p>

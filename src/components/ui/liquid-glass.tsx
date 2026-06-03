@@ -94,6 +94,7 @@ export const GlassDock: React.FC<{ icons: DockIcon[] }> = ({ icons }) => (
         <a
           key={index}
           href={icon.href}
+          aria-label={icon.alt}
           target={icon.href.startsWith("mailto:") || icon.href.startsWith("tel:") ? "_self" : "_blank"}
           rel="noopener noreferrer"
           className="group relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-2xl bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 text-textMain hover:text-textMain/80 transition-all duration-500 hover:scale-110 hover:bg-white/25 dark:hover:bg-white/10 shadow-md cursor-pointer select-none"

@@ -203,6 +203,8 @@ function App() {
   }, []);
 
   useEffect(() => {
+    if (isMobileDevice) return; // Skip Lenis smooth scrolling on mobile devices to save main thread CPU
+
     const lenis = new Lenis();
 
     function raf(time: number) {
@@ -215,9 +217,11 @@ function App() {
     return () => {
       lenis.destroy();
     };
-  }, []);
+  }, [isMobileDevice]);
 
   useEffect(() => {
+    if (isMobileDevice) return; // Skip watermark removal polling on mobile since Spline is not rendered
+
     const removeWatermark = () => {
       const viewers = document.querySelectorAll('spline-viewer');
       viewers.forEach(viewer => {
@@ -246,7 +250,7 @@ function App() {
     removeWatermark();
     const interval = setInterval(removeWatermark, 100);
     return () => clearInterval(interval);
-  }, []);
+  }, [isMobileDevice]);
 
   const marqueeRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
@@ -432,7 +436,7 @@ function App() {
                     <div className="rounded-[20px] overflow-hidden relative h-[200px]" style={{ background: (proj as any).img2MobileClass ? '#ffffff' : 'rgba(0,0,0,0.05)' }}>
                       <img
                         src={proj.img2}
-                        alt=""
+                        alt={`${proj.name} logo`}
                         className={`absolute inset-0 w-full h-full ${
                           (proj as any).img2MobileClass || ((proj as any).img2Class || 'object-contain p-[10%]')
                         }`}
@@ -446,65 +450,15 @@ function App() {
           )}
 
           {/* === DESKTOP: sticky stacked animation === */}
-          {!isMobileDevice && projects.map((proj, i) => {
-            const targetScale = 1 - (projects.length - 1 - i) * 0.03;
-            const scale = useTransform(projectsScrollY, [i / projects.length, 1], [1, targetScale]);
-
-            return (
-              <div key={i} className="sticky top-24 md:top-32 h-[85vh] flex items-center justify-center">
-                <motion.div
-                  style={{ scale, top: `calc(10vh + ${i * 28}px)` }}
-                  className="w-full h-full max-h-[800px] rounded-[50px] md:rounded-[60px] border border-white/40 dark:border-white/10 bg-white/30 dark:bg-black/40 backdrop-blur-[20px] shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] p-6 md:p-8 flex flex-col gap-6 sm:gap-8 transition-colors duration-300"
-                >
-                  {/* Card Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div className="flex items-center gap-4 sm:gap-8">
-                      <span className="text-textMain font-black text-[clamp(3rem,8vw,100px)] leading-none">{proj.num}</span>
-                      <div className="flex flex-col">
-                        <span className="text-textMain/60 uppercase tracking-widest text-xs sm:text-sm mb-1">{proj.cat}</span>
-                        <h3 className="text-textMain font-medium uppercase text-[clamp(1.2rem,3vw,2.5rem)] leading-tight">{proj.name}</h3>
-                      </div>
-                    </div>
-                    {!proj.isSelfCard && <LiveProjectButton href={proj.link} />}
-                  </div>
-
-                  {/* Card Content */}
-                  {proj.isSelfCard ? (
-                    <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 flex-1 min-h-0 items-stretch p-2 sm:p-4">
-                      <div className="w-full sm:w-[50%] flex flex-col justify-center gap-4 text-left">
-                        <h4 className="text-[clamp(1.1rem,2.5vw,2rem)] font-bold text-textMain uppercase tracking-tight">Khanya's Digital Space</h4>
-                        <p className="text-[clamp(0.8rem,1.5vw,1.1rem)] text-textMain/80 font-light leading-relaxed">
-                          This portfolio landing page is built from scratch as a showcase of interactive 3D elements, premium micro-interactions, responsive typography, and state-of-the-art asset optimization.
-                        </p>
-                        <div className="flex flex-wrap gap-2 mt-1">
-                          {['React 18', 'TypeScript', 'TailwindCSS', 'Spline 3D', 'Framer Motion', 'Lenis', 'Sharp (WebP)'].map((tech, idx) => (
-                            <span key={idx} className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider bg-white/40 dark:bg-black/30 backdrop-blur-md rounded-full border border-white/20 dark:border-white/10 text-textMain/80">{tech}</span>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="w-full sm:w-[50%] flex-1 rounded-[40px] md:rounded-[50px] overflow-hidden min-h-[200px] relative">
-                        <img src={selfAvatar} alt="Khanya pixel art avatar" className="absolute inset-0 w-full h-full object-cover scale-[1.15]" loading="lazy" />
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex flex-col sm:flex-row gap-4 flex-1 min-h-0">
-                      <div className="hidden sm:flex w-full sm:w-[40%] flex-col gap-4 min-h-0">
-                        <div className="h-[30%] sm:h-[clamp(130px,16vw,230px)] rounded-[40px] md:rounded-[50px] overflow-hidden shrink-0 relative bg-black/5 dark:bg-white/5">
-                          <img src={proj.img2} alt="" className={`absolute inset-0 w-full h-full ${(proj as any).img2Class || 'object-cover'}`} loading="lazy" />
-                        </div>
-                        <div className="flex-1 rounded-[40px] md:rounded-[50px] overflow-hidden min-h-0 relative bg-black/5 dark:bg-white/5">
-                          <img src={proj.img1} alt="" className={`absolute inset-0 w-full h-full ${(proj as any).img1Class || 'object-cover'}`} loading="lazy" />
-                        </div>
-                      </div>
-                      <div className="w-full sm:w-[60%] flex-1 rounded-[40px] md:rounded-[50px] overflow-hidden min-h-0 relative min-h-[220px] bg-black/5 dark:bg-white/5">
-                        <img src={proj.img3} alt="" className={`absolute inset-0 w-full h-full ${(proj as any).img3Class || 'object-cover'}`} loading="lazy" />
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
-              </div>
-            );
-          })}
+          {!isMobileDevice && projects.map((proj, i) => (
+            <DesktopProjectCard
+              key={i}
+              proj={proj}
+              i={i}
+              projectsScrollY={projectsScrollY}
+              totalProjects={projects.length}
+            />
+          ))}
       </section>
 
       {/* TESTIMONIALS SECTION */}
@@ -512,6 +466,90 @@ function App() {
 
       {/* CONTACT/FOOTER SECTION */}
       <ContactSection />
+    </div>
+  );
+}
+
+interface DesktopProjectCardProps {
+  proj: typeof projects[0];
+  i: number;
+  projectsScrollY: any;
+  totalProjects: number;
+}
+
+function DesktopProjectCard({ proj, i, projectsScrollY, totalProjects }: DesktopProjectCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+  const targetScale = 1 - (totalProjects - 1 - i) * 0.03;
+  const scale = useTransform(projectsScrollY, [i / totalProjects, 1], [1, targetScale]);
+
+  return (
+    <div className="sticky top-24 md:top-32 h-[85vh] flex items-center justify-center">
+      <motion.div
+        style={{ scale, top: `calc(10vh + ${i * 28}px)` }}
+        className="w-full h-full max-h-[800px] rounded-[50px] md:rounded-[60px] border border-white/40 dark:border-white/10 bg-white/30 dark:bg-black/40 backdrop-blur-[20px] shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] p-6 md:p-8 flex flex-col gap-6 sm:gap-8 transition-colors duration-300"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* Card Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-4 sm:gap-8">
+            <span className="text-textMain font-black text-[clamp(3rem,8vw,100px)] leading-none">{proj.num}</span>
+            <div className="flex flex-col">
+              <span className="text-textMain/60 uppercase tracking-widest text-xs sm:text-sm mb-1">{proj.cat}</span>
+              <h3 className="text-textMain font-medium uppercase text-[clamp(1.2rem,3vw,2.5rem)] leading-tight">{proj.name}</h3>
+            </div>
+          </div>
+          {!proj.isSelfCard && <LiveProjectButton href={proj.link} />}
+        </div>
+
+        {/* Card Content */}
+        {proj.isSelfCard ? (
+          <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 flex-1 min-h-0 items-stretch p-2 sm:p-4">
+            <div className="w-full sm:w-[50%] flex flex-col justify-center gap-4 text-left">
+              <h4 className="text-[clamp(1.1rem,2.5vw,2rem)] font-bold text-textMain uppercase tracking-tight">Khanya's Digital Space</h4>
+              <p className="text-[clamp(0.8rem,1.5vw,1.1rem)] text-textMain/80 font-light leading-relaxed">
+                This portfolio landing page is built from scratch as a showcase of interactive 3D elements, premium micro-interactions, responsive typography, and state-of-the-art asset optimization.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-1">
+                {['React 18', 'TypeScript', 'TailwindCSS', 'Spline 3D', 'Framer Motion', 'Lenis', 'Sharp (WebP)'].map((tech, idx) => (
+                  <span key={idx} className="px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider bg-white/40 dark:bg-black/30 backdrop-blur-md rounded-full border border-white/20 dark:border-white/10 text-textMain/80">{tech}</span>
+                ))}
+              </div>
+            </div>
+            <div className="w-full sm:w-[50%] flex-1 rounded-[40px] md:rounded-[50px] overflow-hidden min-h-[200px] relative">
+              <img src={selfAvatar} alt="Khanya pixel art avatar" className="absolute inset-0 w-full h-full object-cover scale-[1.15]" loading="lazy" />
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col sm:flex-row gap-4 flex-1 min-h-0">
+            <div className="hidden sm:flex w-full sm:w-[40%] flex-col gap-4 min-h-0">
+              <div className="h-[30%] sm:h-[clamp(130px,16vw,230px)] rounded-[40px] md:rounded-[50px] overflow-hidden shrink-0 relative bg-black/5 dark:bg-white/5">
+                <img src={proj.img2} alt={`${proj.name} logo`} className={`absolute inset-0 w-full h-full ${(proj as any).img2Class || 'object-cover'}`} loading="lazy" />
+              </div>
+              <div className="flex-1 rounded-[40px] md:rounded-[50px] overflow-hidden min-h-0 relative bg-black/5 dark:bg-white/5">
+                <img src={proj.img1} alt={`${proj.name} desktop preview`} className={`absolute inset-0 w-full h-full ${(proj as any).img1Class || 'object-cover'}`} loading="lazy" />
+              </div>
+            </div>
+            {/* The right side defaults to img1 (still WebP) and swaps to img3 (GIF) on hover. */}
+            <div className="w-full sm:w-[60%] flex-1 rounded-[40px] md:rounded-[50px] overflow-hidden min-h-0 relative min-h-[220px] bg-black/5 dark:bg-white/5">
+              <img 
+                src={isHovered ? proj.img3 : proj.img1} 
+                alt={`${proj.name} showcase preview`} 
+                className={`absolute inset-0 w-full h-full ${isHovered ? ((proj as any).img3Class || 'object-cover') : ((proj as any).img1Class || 'object-cover')}`} 
+                loading="lazy" 
+              />
+              {/* Subtle hover overlay prompt to show it's interactive on desktop */}
+              {!isHovered && (
+                <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                  <span className="px-4 py-2 rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-md border border-white/20 text-xs font-semibold uppercase tracking-wider text-textMain">
+                    Hover to Play GIF
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </motion.div>
     </div>
   );
 }

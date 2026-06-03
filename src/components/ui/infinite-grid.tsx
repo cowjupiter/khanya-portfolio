@@ -14,6 +14,8 @@ export function InfiniteGrid() {
 
   // Global mouse position tracking relative to the Hero section
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 640) return; // Skip mouse listener on mobile
+    
     const handleGlobalMouseMove = (e: MouseEvent) => {
       const hero = document.getElementById("home");
       if (!hero) return;
@@ -45,6 +47,7 @@ export function InfiniteGrid() {
   const speedY = 0.25;
 
   useAnimationFrame(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 640) return; // Skip grid scrolling animation on mobile
     const currentX = gridOffsetX.get();
     const currentY = gridOffsetY.get();
     gridOffsetX.set((currentX + speedX) % 40);
