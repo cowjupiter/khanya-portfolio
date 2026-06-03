@@ -239,12 +239,16 @@ function App() {
 
   return (
     <div className="w-full bg-main overflow-x-clip text-textMain transition-colors duration-300">
+      <div className="fixed top-6 md:top-8 left-0 right-0 z-50 flex justify-center pointer-events-none">
+        <FadeIn delay={0} y={-20} className="pointer-events-auto flex justify-center">
+          <NavHeader />
+        </FadeIn>
+      </div>
       <ThemeToggle />
       {/* HERO SECTION */}
       <section id="home" className="relative h-screen flex flex-col overflow-x-clip">
-        <FadeIn delay={0} y={-20} className="flex justify-center items-center px-6 md:px-10 pt-6 md:pt-8 relative z-30">
-          <NavHeader />
-        </FadeIn>
+        {/* Spacer to keep layout intact since navbar is now fixed */}
+        <div className="h-16 sm:h-20 md:h-24 flex-shrink-0" />
 
         <div className="flex-1 flex flex-col justify-center pointer-events-none relative z-20">
           <div className="overflow-hidden w-full mt-14 sm:mt-18 md:mt-20">

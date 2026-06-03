@@ -108,3 +108,12 @@ spline-viewer #logo,
     transform: translate(15%, -15%) scale(1.05);
   }
 }
+
+/* Hide theme toggle button on mobile when nav menu is expanded */
+@media (max-width: 767px) {
+  body.nav-menu-open .theme-toggle-btn {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: scale(0.7) !important;
+  }
+}

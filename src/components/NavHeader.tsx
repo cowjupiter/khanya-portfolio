@@ -41,12 +41,22 @@ export const NavHeader = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Set scroll baseline when opened
+  // Set scroll baseline when opened and toggle body class
   useEffect(() => {
     if (isExpanded) {
       lastScrollY.current = window.scrollY;
     }
-  }, [isExpanded]);
+
+    if (isMobile && isExpanded) {
+      document.body.classList.add("nav-menu-open");
+    } else {
+      document.body.classList.remove("nav-menu-open");
+    }
+
+    return () => {
+      document.body.classList.remove("nav-menu-open");
+    };
+  }, [isExpanded, isMobile]);
 
   // Collapse on scroll
   useEffect(() => {
