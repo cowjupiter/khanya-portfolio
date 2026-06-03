@@ -1,4 +1,4 @@
-import { useEffect, useRef, Suspense, lazy } from 'react';
+import { useEffect, useRef, Suspense, lazy, useState } from 'react';
 const Spline = lazy(() => import('@splinetool/react-spline'));
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ContactButton } from './components/ContactButton';
@@ -177,6 +177,17 @@ const projects = [
 ];
 
 function App() {
+  const [isMobileDevice, setIsMobileDevice] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobileDevice(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   useEffect(() => {
     const lenis = new Lenis();
 
@@ -437,7 +448,16 @@ function App() {
                         </div>
                       </div>
                       <div className="w-full sm:w-[60%] flex-1 rounded-[30px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden min-h-0 relative min-h-[220px] bg-black/5 dark:bg-white/5">
-                        <img src={proj.img3} alt="" className={`absolute inset-0 w-full h-full ${(proj as any).img3Class || 'object-cover'}`} loading="lazy" />
+                        <img 
+                          src={isMobileDevice ? proj.img2 : proj.img3} 
+                          alt="" 
+                          className={`absolute inset-0 w-full h-full ${
+                            isMobileDevice 
+                              ? ((proj as any).img2Class || 'object-contain p-[10%] bg-white') 
+                              : ((proj as any).img3Class || 'object-cover')
+                          }`} 
+                          loading="lazy" 
+                        />
                       </div>
                     </div>
                   )}
