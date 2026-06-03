@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-main: #F2F5F8;
+    --text-main: #121416;
+    
+    --bg-inverted: #0C0C0C;
+    --text-inverted: #FFFFFF;
+    
+    --border-light: rgba(255, 255, 255, 0.15);
+    
+    --hero-gradient-start: #474E59;
+    --hero-gradient-end: #A0B0BD;
+  }
+
+  .dark {
+    --bg-main: #0C0C0C;
+    --text-main: #D7E2EA;
+    
+    --bg-inverted: #FFFFFF;
+    --text-inverted: #0C0C0C;
+    
+    --border-light: rgba(12, 12, 12, 0.15);
+
+    --hero-gradient-start: #646973;
+    --hero-gradient-end: #BBCCD7;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+  width: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.hero-heading {
+  background: linear-gradient(180deg, var(--hero-gradient-start) 0%, var(--hero-gradient-end) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hide Spline Logo Watermark overlay */
+a[href*="spline.design"], 
+[class*="spline"] a, 
+spline-viewer #logo,
+#logo {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Morphing Liquid Orb background behind Spline asset */
+.liquid-orb {
+  animation: morph-orb 15s ease-in-out infinite alternate, spin-orb 25s linear infinite;
+  transform-origin: center;
+}
+
+/* Floating outer wrapper motion */
+.float-orb {
+  animation: float-orb-motion 35s ease-in-out infinite alternate;
+}
+
+@keyframes morph-orb {
+  0% {
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  }
+  50% {
+    border-radius: 70% 30% 52% 48% / 60% 40% 60% 40%;
+  }
+  100% {
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  }
+}
+
+@keyframes spin-orb {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float-orb-motion {
+  0% {
+    transform: translate(-15%, -10%) scale(1);
+  }
+  33% {
+    transform: translate(20%, 15%) scale(1.1);
+  }
+  66% {
+    transform: translate(-10%, 20%) scale(0.9);
+  }
+  100% {
+    transform: translate(15%, -15%) scale(1.05);
+  }
+}
