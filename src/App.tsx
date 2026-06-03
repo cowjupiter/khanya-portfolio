@@ -156,7 +156,7 @@ const projects = [
     img1: academatrixPng,
     img2: academatrixLogo,
     img3: academatrixGif,
-    img2Class: "object-contain bg-white p-[10%]",
+    img2Class: "object-contain bg-gray-900 p-[10%]",
     img3Class: "object-cover scale-[1.15] object-bottom"
   },
   {
@@ -166,7 +166,7 @@ const projects = [
     img1: salmaxPng,
     img2: salmaxLogo,
     img3: salmaxGif,
-    img2Class: "object-contain bg-white p-[10%]"
+    img2Class: "object-contain bg-gray-900 p-[10%]"
   },
   {
     num: "10",

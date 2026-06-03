@@ -122,12 +122,12 @@ export const NavHeader = () => {
     <motion.nav
       layout
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
-      className={`relative flex rounded-full border border-textMain/20 backdrop-blur-md shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] overflow-hidden transition-colors duration-300 ${
+      className={`relative flex border border-textMain/20 backdrop-blur-md shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] overflow-hidden transition-colors duration-300 ${
         showIslandPill 
-          ? "p-1.5 items-center cursor-pointer bg-black/95 dark:bg-white/95 text-white dark:text-black border-transparent shadow-xl" 
+          ? "p-2 px-4 items-center gap-2 cursor-pointer rounded-2xl bg-black/90 dark:bg-white/90 text-white dark:text-black border-transparent shadow-xl" 
           : isMobile && isExpanded
-            ? "p-2 flex-col items-stretch rounded-[24px] bg-black/95 dark:bg-white/95 text-white dark:text-black border-transparent shadow-2xl min-w-[220px]"
-            : "p-1 items-center w-fit bg-textMain/5"
+            ? "p-2 flex-col items-stretch rounded-[20px] bg-black/95 dark:bg-white/95 text-white dark:text-black border-transparent shadow-2xl min-w-[200px]"
+            : "p-1 items-center w-fit rounded-full bg-textMain/5"
       }`}
       onClick={() => {
         if (showIslandPill) setIsExpanded(true);
@@ -137,13 +137,14 @@ export const NavHeader = () => {
         {showIslandPill ? (
           <motion.div
             key="island-pill"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9, y: -4 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: -4 }}
             transition={{ duration: 0.2 }}
-            className="flex items-center justify-center w-12 h-10 sm:w-14 sm:h-11"
+            className="flex items-center gap-2"
           >
-            <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
+            <Menu className="w-4 h-4" />
+            <span className="text-[11px] font-bold uppercase tracking-widest">Menu</span>
           </motion.div>
         ) : (
           <motion.ul
