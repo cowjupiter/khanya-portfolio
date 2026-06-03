@@ -177,11 +177,12 @@ const projects = [
 ];
 
 function App() {
-  const [isMobileDevice, setIsMobileDevice] = useState(false);
+  const [isMobileDevice, setIsMobileDevice] = useState(() => typeof window !== 'undefined' ? window.innerWidth < 640 : false);
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobileDevice(window.innerWidth < 640);
+      const mobile = window.innerWidth < 640;
+      setIsMobileDevice(prev => prev !== mobile ? mobile : prev);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -386,9 +387,9 @@ function App() {
             const scale = useTransform(projectsScrollY, [i / projects.length, 1], [1, targetScale]);
 
             return (
-              <div key={i} className="sticky top-24 md:top-32 h-[85vh] flex items-center justify-center">
+              <div key={i} className="sticky top-20 sm:top-24 md:top-32 h-[65svh] sm:h-[85vh] flex items-center justify-center">
                 <motion.div
-                  style={{ scale, top: `calc(10vh + ${i * 28}px)` }}
+                  style={{ scale, top: isMobileDevice ? `calc(60px + ${i * 12}px)` : `calc(10vh + ${i * 28}px)` }}
                   className="w-full h-full max-h-[800px] rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border border-white/40 dark:border-white/10 bg-white/30 dark:bg-black/40 backdrop-blur-[20px] shadow-[0_8px_32px_0_rgba(0,0,0,0.1)] p-4 sm:p-6 md:p-8 flex flex-col gap-6 sm:gap-8 transition-colors duration-300"
                 >
                   {/* Card Header */}
