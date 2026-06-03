@@ -55,7 +55,7 @@ import selfAvatar from './assets/New Project.jpg';
 
 import academatrixLogoImg from './assets/LOGOS/Logo - academatrix.png';
 import peaceHavenLogoImg from './assets/LOGOS/PeaceHaven_PeaceHaven Logo-06.jpg';
-import weCareEntryLogoImg from './assets/LOGOS/WECARE COMPETITION ENTRY LOGO 1.jpg';
+
 import allThingsAdsLogoImg from './assets/LOGOS/all things ads logo.jpg';
 import amplifyLogoImg from './assets/LOGOS/amplify logo.jpg';
 import ekhayaLogoImg from './assets/LOGOS/ekhaya-logo (1).webp';
@@ -235,12 +235,7 @@ function App() {
     return offset - 200;
   });
 
-  const x2 = useTransform(scrollY, (y) => {
-    if (!marqueeRef.current) return 200;
-    const sectionTop = marqueeRef.current.offsetTop;
-    const offset = (y - sectionTop + window.innerHeight) * 0.3;
-    return -(offset - 200);
-  });
+
 
   return (
     <div className="w-full bg-main overflow-x-clip text-textMain transition-colors duration-300">
