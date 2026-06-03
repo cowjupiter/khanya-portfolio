@@ -51,20 +51,20 @@ import academatrixLogo from './assets/Academatrix/ACADEMATRIX_LOGO.webp';
 import academatrixPng from './assets/Academatrix/academatrix_still.webp';
 import academatrixGif from './assets/Academatrix/academatrix_GIF.gif';
 
-import selfAvatar from './assets/New Project.jpg';
+import selfAvatar from './assets/New Project.webp';
 
-import academatrixLogoImg from './assets/LOGOS/Logo - academatrix.png';
-import peaceHavenLogoImg from './assets/LOGOS/PeaceHaven_PeaceHaven Logo-06.jpg';
+import academatrixLogoImg from './assets/LOGOS/Logo - academatrix.webp';
+import peaceHavenLogoImg from './assets/LOGOS/PeaceHaven_PeaceHaven Logo-06.webp';
 
-import allThingsAdsLogoImg from './assets/LOGOS/all things ads logo.jpg';
-import amplifyLogoImg from './assets/LOGOS/amplify logo.jpg';
+import allThingsAdsLogoImg from './assets/LOGOS/all things ads logo.webp';
+import amplifyLogoImg from './assets/LOGOS/amplify logo.webp';
 import ekhayaLogoImg from './assets/LOGOS/ekhaya-logo (1).webp';
-import financePortalLogoImg from './assets/LOGOS/finance portal logo.jpg';
-import isitheloLogoImg from './assets/LOGOS/isithelo sekhethelo logo.png';
-import salmaxLogoImg from './assets/LOGOS/logo-salmax.png';
+import financePortalLogoImg from './assets/LOGOS/finance portal logo.webp';
+import isitheloLogoImg from './assets/LOGOS/isithelo sekhethelo logo.webp';
+import salmaxLogoImg from './assets/LOGOS/logo-salmax.webp';
 import monoshezLogoImg from './assets/LOGOS/monoshez logo.webp';
-import ultimateLogoImg from './assets/LOGOS/ultimate holdings_logo.png';
-import weCareLogoImg from './assets/LOGOS/we care logo.jpg';
+import ultimateLogoImg from './assets/LOGOS/ultimate holdings_logo.webp';
+import weCareLogoImg from './assets/LOGOS/we care logo.webp';
 
 const clientLogos = [
   { src: academatrixLogoImg, name: "academatrix", w: 256, h: 176, rot: -4 },
@@ -417,7 +417,7 @@ function App() {
 
                       {/* Right: Avatar Image */}
                       <div className="w-full sm:w-[50%] flex-1 rounded-[30px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden min-h-[200px] relative">
-                        <img src={selfAvatar} alt="Khanya pixel art avatar" className="absolute inset-0 w-full h-full object-cover scale-[1.15]" />
+                        <img src={selfAvatar} alt="Khanya pixel art avatar" className="absolute inset-0 w-full h-full object-cover scale-[1.15]" loading="lazy" />
                       </div>
                     </div>
                   ) : (
@@ -425,15 +425,15 @@ function App() {
                       <div className="hidden sm:flex w-full sm:w-[40%] flex-col gap-4 min-h-0">
                         {/* Logo Container (now Top Left) */}
                         <div className="h-[30%] sm:h-[clamp(130px,16vw,230px)] rounded-[30px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden shrink-0 relative bg-black/5 dark:bg-white/5">
-                          <img src={proj.img2} alt="" className={`absolute inset-0 w-full h-full ${(proj as any).img2Class || 'object-cover'}`} />
+                          <img src={proj.img2} alt="" className={`absolute inset-0 w-full h-full ${(proj as any).img2Class || 'object-cover'}`} loading="lazy" />
                         </div>
                         {/* PNG Container (now Bottom Left) */}
                         <div className="flex-1 rounded-[30px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden min-h-0 relative bg-black/5 dark:bg-white/5">
-                          <img src={proj.img1} alt="" className={`absolute inset-0 w-full h-full ${(proj as any).img1Class || 'object-cover'}`} />
+                          <img src={proj.img1} alt="" className={`absolute inset-0 w-full h-full ${(proj as any).img1Class || 'object-cover'}`} loading="lazy" />
                         </div>
                       </div>
                       <div className="w-full sm:w-[60%] flex-1 rounded-[30px] sm:rounded-[40px] md:rounded-[50px] overflow-hidden min-h-0 relative min-h-[220px] bg-black/5 dark:bg-white/5">
-                        <img src={proj.img3} alt="" className={`absolute inset-0 w-full h-full ${(proj as any).img3Class || 'object-cover'}`} />
+                        <img src={proj.img3} alt="" className={`absolute inset-0 w-full h-full ${(proj as any).img3Class || 'object-cover'}`} loading="lazy" />
                       </div>
                     </div>
                   )}
