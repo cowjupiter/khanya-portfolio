@@ -4,6 +4,20 @@ import React from "react";
 import { Mail, Phone, Linkedin, ArrowUpRight } from "lucide-react";
 import { FadeIn } from "../FadeIn";
 
+const Tiktok = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
+
 // Types
 interface GlassEffectProps {
   children: React.ReactNode;
@@ -176,17 +190,22 @@ export function ContactSection() {
     {
       icon: <Mail className="w-6 h-6 sm:w-7 sm:h-7 stroke-[1.5]" />,
       alt: "Email",
-      href: "mailto:hello@khanya.design",
+      href: "mailto:khanyamoloke@icloud.com",
     },
     {
       icon: <Phone className="w-6 h-6 sm:w-7 sm:h-7 stroke-[1.5]" />,
       alt: "Phone",
-      href: "tel:+27823456789",
+      href: "tel:+27681201733",
     },
     {
       icon: <Linkedin className="w-6 h-6 sm:w-7 sm:h-7 stroke-[1.5]" />,
       alt: "LinkedIn",
-      href: "https://linkedin.com/in/khanya-design",
+      href: "https://www.linkedin.com/in/khanyamoloke/",
+    },
+    {
+      icon: <Tiktok className="w-6 h-6 sm:w-7 sm:h-7 stroke-[1.5]" />,
+      alt: "TikTok",
+      href: "https://www.tiktok.com/@deiity___",
     },
   ];
 
@@ -238,9 +257,9 @@ export function ContactSection() {
         <div className="flex flex-col items-center gap-8 sm:gap-10 w-full">
           {/* Glass Button CTA */}
           <FadeIn delay={0.3} y={35}>
-            <GlassButton href="mailto:hello@khanya.design">
+            <GlassButton href="mailto:khanyamoloke@icloud.com">
               <span className="text-sm sm:text-base font-semibold uppercase tracking-widest">
-                hello@khanya.design
+                Send Me an Email
               </span>
               <ArrowUpRight className="w-5 h-5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
             </GlassButton>
@@ -261,11 +280,11 @@ export function ContactSection() {
         <div className="w-full border-t border-textMain/10 pt-10 sm:pt-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] sm:text-xs text-textMain/40 font-light uppercase tracking-widest mt-8">
           <span>© 2026 Khanya. All rights reserved.</span>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-textMain transition-colors">
+            <a href="https://www.linkedin.com/in/khanyamoloke/" target="_blank" rel="noopener noreferrer" className="hover:text-textMain transition-colors">
               LinkedIn
             </a>
-            <a href="#" className="hover:text-textMain transition-colors">
-              Dribbble
+            <a href="https://www.tiktok.com/@deiity___" target="_blank" rel="noopener noreferrer" className="hover:text-textMain transition-colors">
+              TikTok
             </a>
           </div>
         </div>

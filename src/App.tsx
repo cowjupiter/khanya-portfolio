@@ -53,6 +53,8 @@ import academatrixGif from './assets/Academatrix/academatrix_GIF.gif';
 
 import selfAvatar from './assets/New Project.webp';
 
+import wdbkLogo from './assets/innet money logos/wdbk logo.png';
+
 import academatrixLogoImg from './assets/LOGOS/Logo - academatrix.webp';
 import peaceHavenLogoImg from './assets/LOGOS/PeaceHaven_PeaceHaven Logo-06.webp';
 
@@ -92,7 +94,8 @@ const projects = [
     img1: peaceHavenPng,
     img2: peaceHavenLogo,
     img3: peaceHavenGif,
-    img2Class: "object-contain bg-white p-[10%]"
+    img2Class: "object-contain bg-white p-[10%]",
+    link: "https://peacehavenonlagoon.com/"
   },
   {
     num: "02",
@@ -101,7 +104,8 @@ const projects = [
     img1: isitheloPng,
     img2: isitheloLogo,
     img3: isitheloGif,
-    img2Class: "object-contain bg-white p-[10%]"
+    img2Class: "object-contain bg-white p-[10%]",
+    link: "https://isithelosekhethelo.co.za/"
   },
   {
     num: "03",
@@ -110,7 +114,8 @@ const projects = [
     img1: monoshezPng,
     img2: monoshezLogo,
     img3: monoshezGif,
-    img2Class: "object-contain bg-white p-[10%]"
+    img2Class: "object-contain bg-white p-[10%]",
+    link: "https://monoshezholdings.co.za/"
   },
   {
     num: "04",
@@ -120,7 +125,8 @@ const projects = [
     img2: ultimateLogo,
     img3: ultimateGif,
     img2Class: "object-contain bg-white p-[10%]",
-    img3Class: "object-cover scale-[1.15] object-bottom"
+    img3Class: "object-cover scale-[1.15] object-bottom",
+    link: "https://ultimatehol.com/"
   },
   {
     num: "05",
@@ -129,7 +135,8 @@ const projects = [
     img1: amplifyPng,
     img2: amplifyLogo,
     img3: amplifyGif,
-    img2Class: "object-contain bg-white p-[10%]"
+    img2Class: "object-contain bg-white p-[10%]",
+    link: "https://mbkbizsolutions.co.za/"
   },
   {
     num: "06",
@@ -138,7 +145,8 @@ const projects = [
     img1: ekhayaPng,
     img2: ekhayaLogo,
     img3: ekhayaGif,
-    img2Class: "object-contain bg-white p-[10%]"
+    img2Class: "object-contain bg-white p-[10%]",
+    link: "https://ekhayalentokozo.co.za/"
   },
   {
     num: "07",
@@ -147,7 +155,8 @@ const projects = [
     img1: serenityPng,
     img2: serenityLogo,
     img3: serenityGif,
-    img2Class: "object-contain bg-white p-[10%]"
+    img2Class: "object-contain bg-white p-[10%]",
+    link: "http://serenityblinds.co.za/"
   },
   {
     num: "08",
@@ -158,7 +167,8 @@ const projects = [
     img3: academatrixGif,
     img2Class: "object-contain bg-gray-900 p-[10%]",
     img2MobileClass: "object-contain bg-white p-[8%]",
-    img3Class: "object-cover scale-[1.15] object-bottom"
+    img3Class: "object-cover scale-[1.15] object-bottom",
+    link: "https://academatrix.com/"
   },
   {
     num: "09",
@@ -168,7 +178,8 @@ const projects = [
     img2: salmaxLogo,
     img3: salmaxGif,
     img2Class: "object-contain bg-gray-900 p-[10%]",
-    img2MobileClass: "object-contain bg-white p-[8%]"
+    img2MobileClass: "object-contain bg-white p-[8%]",
+    link: "https://salmax.co.za/"
   },
   {
     num: "10",
@@ -256,6 +267,16 @@ function App() {
       <div className="fixed top-6 md:top-8 left-0 right-0 z-50 flex justify-center pointer-events-none">
         <FadeIn delay={0} y={-20} className="pointer-events-auto flex justify-center">
           <NavHeader />
+        </FadeIn>
+      </div>
+      {/* SITE LOGO — top left, mirrors theme toggle on the right, positioned/sized to match white highlight */}
+      <div className="fixed top-[20px] left-6 md:top-[12.5px] md:left-10 z-[99999] pointer-events-none">
+        <FadeIn delay={0} y={-20}>
+          <img
+            src={wdbkLogo}
+            alt="WDBK logo"
+            className="h-[52px] md:h-[83px] w-auto object-contain"
+          />
         </FadeIn>
       </div>
       <ThemeToggle />
@@ -399,7 +420,7 @@ function App() {
                         <h3 className="text-textMain font-medium uppercase text-[clamp(0.9rem,4.5vw,1.4rem)] leading-tight">{proj.name}</h3>
                       </div>
                     </div>
-                    {!proj.isSelfCard && <LiveProjectButton />}
+                    {!proj.isSelfCard && <LiveProjectButton href={proj.link} />}
                   </div>
 
                   {/* Card Image */}
@@ -444,7 +465,7 @@ function App() {
                         <h3 className="text-textMain font-medium uppercase text-[clamp(1.2rem,3vw,2.5rem)] leading-tight">{proj.name}</h3>
                       </div>
                     </div>
-                    {!proj.isSelfCard && <LiveProjectButton />}
+                    {!proj.isSelfCard && <LiveProjectButton href={proj.link} />}
                   </div>
 
                   {/* Card Content */}
