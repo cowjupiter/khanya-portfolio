@@ -202,6 +202,21 @@ function App() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  const [shouldLoad3D, setShouldLoad3D] = useState(false);
+
+  useEffect(() => {
+    if (isMobileDevice) return;
+    const handleLoad = () => {
+      setTimeout(() => setShouldLoad3D(true), 1200);
+    };
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
+    }
+  }, [isMobileDevice]);
+
   useEffect(() => {
     if (isMobileDevice) return; // Skip Lenis smooth scrolling on mobile devices to save main thread CPU
 
@@ -316,11 +331,15 @@ function App() {
           </div>
 
           {/* Spline Canvas wrapper - strictly z-10 to stay in front of the liquid background - disabled on mobile */}
-          {!isMobileDevice && (
+          {!isMobileDevice && shouldLoad3D && (
             <motion.div 
               className="relative z-10 w-full h-full pointer-events-auto"
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, y: [0, -15, 0] }}
+              transition={{
+                opacity: { duration: 1, ease: "easeOut" },
+                y: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+              }}
             >
               <Suspense fallback={null}>
                 <Spline
