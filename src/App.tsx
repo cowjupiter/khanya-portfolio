@@ -82,7 +82,7 @@ const clientLogos = [
   { src: weCareLogoImg, name: "we care", w: 272, h: 192, rot: 0 }
 ];
 
-const row1 = [...clientLogos, ...clientLogos];
+const row1 = [...clientLogos, ...clientLogos, ...clientLogos];
 
 
 
@@ -367,7 +367,7 @@ function App() {
 
         <div className="flex flex-col items-center pt-4 pb-0 w-full overflow-hidden">
           <div
-            className="animate-marquee-infinite flex items-center will-change-transform w-max pr-12 -space-x-6 sm:-space-x-10 md:-space-x-16"
+            className="animate-marquee-infinite flex items-center flex-nowrap will-change-transform w-max -space-x-6 sm:-space-x-10 md:-space-x-16"
           >
             {row1.map((logo, i) => (
               <LogoCard
