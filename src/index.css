@@ -15,7 +15,7 @@
     --hero-gradient-start: #1B2028; /* Slashed brightness to achieve high contrast (>10:1) on light grey bg */
     --hero-gradient-end: #4C5764;   /* Improved contrast (>7.5:1) for text accessibility */
     
-    --logo-scale: 1;
+    --logo-scale: 0.7;
   }
 
   .dark {
