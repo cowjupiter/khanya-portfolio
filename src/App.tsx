@@ -82,7 +82,7 @@ const clientLogos = [
   { src: weCareLogoImg, name: "we care", w: 272, h: 192, rot: 0 }
 ];
 
-const row1 = [...clientLogos, ...clientLogos, ...clientLogos, ...clientLogos];
+const row1 = [...clientLogos, ...clientLogos];
 
 
 
@@ -165,7 +165,7 @@ const projects = [
     img1: academatrixPng,
     img2: academatrixLogo,
     img3: academatrixGif,
-    img2Class: "object-contain bg-gray-900 p-[10%]",
+    img2Class: "object-contain bg-white p-[10%]",
     img2MobileClass: "object-contain bg-white p-[8%]",
     img3Class: "object-cover scale-[1.15] object-bottom",
     link: "https://academatrix.com/"
@@ -177,7 +177,7 @@ const projects = [
     img1: salmaxPng,
     img2: salmaxLogo,
     img3: salmaxGif,
-    img2Class: "object-contain bg-gray-900 p-[10%]",
+    img2Class: "object-contain bg-white p-[10%]",
     img2MobileClass: "object-contain bg-white p-[8%]",
     link: "https://salmax.co.za/"
   },
@@ -253,16 +253,10 @@ function App() {
   }, [isMobileDevice]);
 
   const marqueeRef = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll();
   const projectsContainerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: projectsScrollY } = useScroll({ target: projectsContainerRef });
 
-  const x1 = useTransform(scrollY, (y) => {
-    if (!marqueeRef.current) return -200;
-    const sectionTop = marqueeRef.current.offsetTop;
-    const offset = (y - sectionTop + window.innerHeight) * 0.3;
-    return offset - 200;
-  });
+
 
 
 
@@ -340,7 +334,7 @@ function App() {
       </section>
 
       {/* MARQUEE SECTION */}
-      <section ref={marqueeRef} className="bg-main pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden transition-colors duration-300 relative">
+      <section ref={marqueeRef} className="bg-main pt-24 sm:pt-32 md:pt-40 pb-2 sm:pb-4 overflow-hidden transition-colors duration-300 relative">
         <div className="absolute inset-0 max-md:hidden top-[20%] -z-10 h-[300px] w-full bg-transparent bg-[linear-gradient(to_right,#57534e_1px,transparent_1px),linear-gradient(to_bottom,#57534e_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-10 [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)] dark:bg-[linear-gradient(to_right,#a8a29e_1px,transparent_1px),linear-gradient(to_bottom,#a8a29e_1px,transparent_1px)]"></div>
 
         <div className="flex flex-col items-center mb-8 sm:mb-12 px-4">
@@ -352,10 +346,9 @@ function App() {
           </h2>
         </div>
 
-        <div className="flex flex-col items-center py-10 w-full">
-          <motion.div
-            className="flex items-center will-change-transform w-max pr-12 -space-x-12 sm:-space-x-16"
-            style={{ x: x1 }}
+        <div className="flex flex-col items-center pt-4 pb-0 w-full overflow-hidden">
+          <div
+            className="animate-marquee-infinite flex items-center will-change-transform w-max pr-12 -space-x-6 sm:-space-x-10 md:-space-x-16"
           >
             {row1.map((logo, i) => (
               <LogoCard
@@ -368,12 +361,12 @@ function App() {
                 rotation={logo.rot}
               />
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* ABOUT SECTION */}
-      <section id="about" className="relative min-h-screen flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-20 overflow-hidden">
+      <section id="about" className="relative min-h-[75vh] md:min-h-screen flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-10 sm:py-20 overflow-hidden">
         <FadeIn delay={0.25} x={-80} y={0} duration={0.9} className="absolute bottom-[8%] left-[2%] sm:left-[6%] md:left-[10%] w-[60px] sm:w-[140px] md:w-[180px]">
           <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png" alt="" className="w-full object-contain" />
         </FadeIn>

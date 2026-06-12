@@ -158,14 +158,14 @@ export const NavHeader = () => {
             onMouseLeave={() => !isMobile && setHoverStyle(null)}
           >
             {isMobile && (
-              <div className="flex items-center justify-between w-full pl-4 pr-2 py-1.5 border-b border-white/10 dark:border-black/10 mb-2">
+              <div className="relative flex items-center justify-center w-full py-1.5 border-b border-white/10 dark:border-black/10 mb-2">
                 <span className="text-[10px] font-black uppercase tracking-widest text-white/40 dark:text-black/40">Menu</span>
                 <button 
                   onClick={(e) => {
                     e.stopPropagation();
                     setIsExpanded(false);
                   }}
-                  className="text-white/70 hover:text-white dark:text-black/70 dark:hover:text-black p-1 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-colors"
+                  className="absolute right-2 text-white/70 hover:text-white dark:text-black/70 dark:hover:text-black p-1 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>

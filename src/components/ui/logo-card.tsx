@@ -32,10 +32,10 @@ export const LogoCard = ({
       initial={{ rotate: rotation }}
       animate={{ rotate: rotation }}
       style={{
-        width,
-        height,
+        width: typeof width === 'number' ? `calc(${width}px * var(--logo-scale, 1))` : width,
+        height: typeof height === 'number' ? `calc(${height}px * var(--logo-scale, 1))` : height,
       }}
-      className={`relative shrink-0 cursor-grab active:cursor-grabbing rounded-[2rem] p-4 md:p-6 flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(255,255,255,0.05)] border border-black/5 dark:border-white/10 ${
+      className={`relative shrink-0 cursor-grab active:cursor-grabbing rounded-[1.25rem] sm:rounded-[1.75rem] md:rounded-[2rem] p-2.5 sm:p-4 md:p-6 flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(255,255,255,0.05)] border border-black/5 dark:border-white/10 ${
         isDarkBg ? "bg-[#140047]" : "bg-white"
       }`}
     >

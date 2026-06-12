@@ -14,6 +14,8 @@
     
     --hero-gradient-start: #1B2028; /* Slashed brightness to achieve high contrast (>10:1) on light grey bg */
     --hero-gradient-end: #4C5764;   /* Improved contrast (>7.5:1) for text accessibility */
+    
+    --logo-scale: 1;
   }
 
   .dark {
@@ -120,6 +122,9 @@ spline-viewer #logo,
 
 /* Optimize heavy morph and floating animations on mobile to reduce paint storm and layout computation */
 @media (max-width: 640px) {
+  :root {
+    --logo-scale: 0.48;
+  }
   .liquid-orb {
     animation: spin-orb 40s linear infinite !important;
     border-radius: 50% !important; /* Static circle is extremely cheap to composite */
@@ -134,4 +139,29 @@ spline-viewer #logo,
   .liquid-orb, .float-orb, .float-orb * {
     animation: none !important;
   }
+  .animate-marquee-infinite {
+    animation: none !important;
+  }
 }
+
+/* Infinite auto-scrolling marquee animation */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-infinite {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 38s linear infinite;
+}
+
+/* Pause scroll on hover for better UX/interaction */
+.animate-marquee-infinite:hover {
+  animation-play-state: paused;
+}
+

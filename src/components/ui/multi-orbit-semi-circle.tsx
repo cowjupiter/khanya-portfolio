@@ -204,10 +204,10 @@ export default function MultiOrbitSemiCircle() {
 
   const iconSize =
     size.width < 480
-      ? Math.max(34, baseWidth * 0.07)
+      ? Math.max(44, baseWidth * 0.12)
       : size.width < 768
-      ? Math.max(42, baseWidth * 0.08)
-      : Math.max(50, baseWidth * 0.09);
+      ? Math.max(52, baseWidth * 0.1)
+      : Math.max(58, baseWidth * 0.09);
 
   // Dynamically swap CapCut logo based on theme (white logo on dark background, dark logo on light background)
   const dynamicCoreSkills = CORE_SKILLS.map((skill) => {

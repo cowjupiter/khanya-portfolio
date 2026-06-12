@@ -174,6 +174,11 @@ const SERVICES = [
     num: "06", 
     title: "Frontend Web Dev", 
     desc: "Building responsive, high-performance web applications using modern JavaScript frameworks like React, Next.js, and sleek animation libraries for premium interactive experiences." 
+  },
+  { 
+    num: "07", 
+    title: "Graphic Design", 
+    desc: "Creating visually striking print and digital assets — including marketing materials, social media graphics, brochures, and layout designs — to communicate your brand message effectively." 
   }
 ];
 
