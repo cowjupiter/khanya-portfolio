@@ -365,7 +365,7 @@ function App() {
           </h2>
         </div>
 
-        <div className="flex flex-col items-center pt-4 pb-0 w-full overflow-hidden">
+        <div className="flex flex-col items-center pt-8 pb-14 w-full overflow-hidden">
           <div
             className="animate-marquee-infinite flex items-center flex-nowrap will-change-transform w-max -space-x-6 sm:-space-x-10 md:-space-x-16"
           >
@@ -385,7 +385,7 @@ function App() {
       </section>
 
       {/* ABOUT SECTION */}
-      <section id="about" className="relative min-h-[75vh] md:min-h-screen flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 py-10 sm:py-20 overflow-hidden">
+      <section id="about" className="relative min-h-[75vh] md:min-h-screen flex flex-col items-center justify-center px-5 sm:px-8 md:px-10 pt-4 pb-14 sm:pt-6 sm:pb-20 overflow-hidden">
         <FadeIn delay={0.25} x={-80} y={0} duration={0.9} className="absolute bottom-[8%] left-[2%] sm:left-[6%] md:left-[10%] w-[60px] sm:w-[140px] md:w-[180px]">
           <img src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png" alt="" className="w-full object-contain" />
         </FadeIn>
