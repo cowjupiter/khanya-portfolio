@@ -1,4 +1,4 @@
-import { useEffect, useRef, Suspense, lazy, useState, useCallback } from 'react';
+import { useEffect, useRef, Suspense, lazy, useState } from 'react';
 const Spline = lazy(() => import('@splinetool/react-spline'));
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ContactButton } from './components/ContactButton';
@@ -193,8 +193,6 @@ const projects = [
 
 function App() {
   const [isMobileDevice, setIsMobileDevice] = useState(() => typeof window !== 'undefined' ? window.innerWidth < 640 : false);
-  const [isLoading, setIsLoading] = useState(true);
-  const handleLoadComplete = useCallback(() => setIsLoading(false), []);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -281,8 +279,8 @@ function App() {
 
   return (
     <>
-      <LoadingScreen onComplete={handleLoadComplete} />
-      <div className={`w-full bg-main overflow-x-clip text-textMain transition-colors duration-300 ${isLoading ? 'invisible' : 'visible'}`}>
+      <LoadingScreen />
+      <div className="w-full bg-main overflow-x-clip text-textMain transition-colors duration-300">
       <div className="fixed top-6 md:top-8 left-0 right-0 z-50 flex justify-center pointer-events-none">
         <FadeIn delay={0} y={-20} className="pointer-events-auto flex justify-center">
           <NavHeader />

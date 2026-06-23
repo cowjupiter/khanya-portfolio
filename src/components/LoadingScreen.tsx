@@ -14,22 +14,17 @@ const facts = [
   { emoji: '🧠', text: "I think I have ADHD. I also think I— oh look, a new design idea." },
 ];
 
-interface LoadingScreenProps {
-  onComplete: () => void;
-}
-
-export function LoadingScreen({ onComplete }: LoadingScreenProps) {
+// No props needed — the loader manages its own lifecycle
+export function LoadingScreen() {
   const [factIndex, setFactIndex] = useState(() => Math.floor(Math.random() * facts.length));
-  const [exiting, setExiting] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   const FACT_INTERVAL = 2400;
-  const MIN_DISPLAY_TIME = 3500; // minimum 3.5s regardless of page load speed
+  const MIN_DISPLAY_TIME = 3500;
 
   const handleDone = useCallback(() => {
-    if (exiting) return;
-    setExiting(true);
-    setTimeout(onComplete, 700);
-  }, [onComplete, exiting]);
+    setVisible(false);
+  }, []);
 
   useEffect(() => {
     let minTimeDone = false;
@@ -39,13 +34,11 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
       if (minTimeDone && pageLoaded) handleDone();
     };
 
-    // Minimum display time
     const minTimer = setTimeout(() => {
       minTimeDone = true;
       tryDismiss();
     }, MIN_DISPLAY_TIME);
 
-    // Wait for the page to fully load too
     if (document.readyState === 'complete') {
       pageLoaded = true;
     } else {
@@ -56,7 +49,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
     return () => clearTimeout(minTimer);
   }, [handleDone]);
 
-  // Cycle through facts continuously (loops forever in background)
+  // Cycle through facts continuously
   useEffect(() => {
     const interval = setInterval(() => {
       setFactIndex(prev => (prev + 1) % facts.length);
@@ -66,13 +59,15 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
 
   return (
     <AnimatePresence>
-      {!exiting && (
+      {visible && (
         <motion.div
           key="loader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.7, ease: 'easeInOut' }}
           className="fixed inset-0 z-[9999999] flex flex-col items-center justify-center bg-white overflow-hidden select-none"
+          // Pointer events none so the page behind is already interactive once loaded
+          style={{ pointerEvents: visible ? 'auto' : 'none' }}
         >
           <div className="relative z-10 flex flex-col items-center gap-10 px-8 max-w-xl text-center">
 
@@ -86,9 +81,9 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
               <span className="text-black/40 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.3em]">
                 Hold on tight ✨
               </span>
-              <h1 className="hero-heading font-black text-2xl sm:text-3xl tracking-tight leading-snug max-w-[420px] uppercase">
+              <h2 className="hero-heading font-black text-2xl sm:text-3xl tracking-tight leading-snug max-w-[420px] uppercase">
                 Random facts about me
-              </h1>
+              </h2>
               <p className="text-black/40 font-light text-sm sm:text-base tracking-wide">
                 while we get things ready for you
               </p>
@@ -111,7 +106,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
                   <span className="text-5xl sm:text-6xl">
                     {facts[factIndex].emoji}
                   </span>
-                  <p className="text-black/70 font-medium text-base sm:text-lg leading-relaxed max-w-sm" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif' }}>
+                  <p className="text-black/70 font-medium text-base sm:text-lg leading-relaxed max-w-sm">
                     {facts[factIndex].text}
                   </p>
                 </motion.div>
@@ -134,7 +129,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
             </div>
 
             {/* Subtle bottom note */}
-            <p className="text-black/25 text-[10px] uppercase tracking-widest font-semibold" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif' }}>
+            <p className="text-black/25 text-[10px] uppercase tracking-widest font-semibold">
               Preparing your experience...
             </p>
           </div>
