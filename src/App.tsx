@@ -2,20 +2,22 @@ import { useEffect, useRef, Suspense, lazy, useState } from 'react';
 const Spline = lazy(() => import('@splinetool/react-spline'));
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ContactButton } from './components/ContactButton';
-import { GraphicDesignPortfolio } from './components/ui/graphic-design-portfolio';
 import { LiveProjectButton } from './components/LiveProjectButton';
 import { FadeIn } from './components/FadeIn';
 import { AnimatedText } from './components/AnimatedText';
 import { ThemeToggle } from './components/ThemeToggle';
 import { NavHeader } from './components/NavHeader';
 import { LoadingScreen } from './components/LoadingScreen';
-import { ShuffleCards } from './components/ui/testimonial-cards';
-import { ContactSection } from './components/ui/liquid-glass';
 import { InfiniteGrid } from './components/ui/infinite-grid';
-import MultiOrbitSemiCircle from './components/ui/multi-orbit-semi-circle';
 import { LogoCard } from './components/ui/logo-card';
-import AnimatedServices from './components/ui/animated-services';
 import Lenis from 'lenis';
+
+// Lazy-load below-the-fold heavy sections to reduce initial JS and TBT
+const GraphicDesignPortfolio = lazy(() => import('./components/ui/graphic-design-portfolio').then(m => ({ default: m.GraphicDesignPortfolio })));
+const ShuffleCards = lazy(() => import('./components/ui/testimonial-cards').then(m => ({ default: m.ShuffleCards })));
+const ContactSection = lazy(() => import('./components/ui/liquid-glass').then(m => ({ default: m.ContactSection })));
+const MultiOrbitSemiCircle = lazy(() => import('./components/ui/multi-orbit-semi-circle'));
+const AnimatedServices = lazy(() => import('./components/ui/animated-services'));
 
 import peaceHavenLogo from './assets/peacehaven/PeaceHavenLOGO.webp';
 import peaceHavenPng from './assets/peacehaven/peacehavenPNG.webp';
@@ -415,10 +417,14 @@ function App() {
       </section>
 
       {/* CREATIVE TOOLKIT (SKILLS) */}
-      <MultiOrbitSemiCircle />
+      <Suspense fallback={null}>
+        <MultiOrbitSemiCircle />
+      </Suspense>
 
       {/* SERVICES SECTION */}
-      <AnimatedServices />
+      <Suspense fallback={null}>
+        <AnimatedServices />
+      </Suspense>
 
       {/* PROJECTS SECTION */}
       <section id="projects" ref={projectsContainerRef} className="bg-main rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 relative z-10 px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32 transition-colors duration-300">
@@ -446,7 +452,7 @@ function App() {
                   {/* Card Image */}
                   {proj.isSelfCard ? (
                     <div className="rounded-[20px] overflow-hidden relative h-[200px] bg-black/5 dark:bg-white/5">
-                      <img src={selfAvatar} alt="Khanya avatar" className="absolute inset-0 w-full h-full object-cover scale-[1.15]" loading="lazy" />
+                      <img src={selfAvatar} alt="Khanya avatar" className="absolute inset-0 w-full h-full object-cover scale-[1.15]" loading="lazy" decoding="async" />
                     </div>
                   ) : (
                     <div className="rounded-[20px] overflow-hidden relative h-[200px]" style={{ background: (proj as any).img2MobileClass ? '#ffffff' : 'rgba(0,0,0,0.05)' }}>
@@ -457,6 +463,7 @@ function App() {
                           (proj as any).img2MobileClass || ((proj as any).img2Class || 'object-contain p-[10%]')
                         }`}
                         loading="lazy"
+                        decoding="async"
                       />
                     </div>
                   )}
@@ -478,13 +485,19 @@ function App() {
       </section>
 
       {/* GRAPHIC DESIGN PORTFOLIO */}
-      <GraphicDesignPortfolio />
+      <Suspense fallback={null}>
+        <GraphicDesignPortfolio />
+      </Suspense>
 
       {/* TESTIMONIALS SECTION */}
-      <ShuffleCards />
+      <Suspense fallback={null}>
+        <ShuffleCards />
+      </Suspense>
 
       {/* CONTACT/FOOTER SECTION */}
-      <ContactSection />
+      <Suspense fallback={null}>
+        <ContactSection />
+      </Suspense>
     </div>
     </>
   );
@@ -537,17 +550,17 @@ function DesktopProjectCard({ proj, i, projectsScrollY, totalProjects }: Desktop
               </div>
             </div>
             <div className="w-full sm:w-[50%] flex-1 rounded-[40px] md:rounded-[50px] overflow-hidden min-h-[200px] relative">
-              <img src={selfAvatar} alt="Khanya pixel art avatar" className="absolute inset-0 w-full h-full object-cover scale-[1.15]" loading="lazy" />
+              <img src={selfAvatar} alt="Khanya pixel art avatar" className="absolute inset-0 w-full h-full object-cover scale-[1.15]" loading="lazy" decoding="async" />
             </div>
           </div>
         ) : (
           <div className="flex flex-col sm:flex-row gap-4 flex-1 min-h-0">
             <div className="hidden sm:flex w-full sm:w-[40%] flex-col gap-4 min-h-0">
               <div className="h-[30%] sm:h-[clamp(130px,16vw,230px)] rounded-[40px] md:rounded-[50px] overflow-hidden shrink-0 relative bg-black/5 dark:bg-white/5">
-                <img src={proj.img2} alt={`${proj.name} logo`} className={`absolute inset-0 w-full h-full ${(proj as any).img2Class || 'object-cover'}`} loading="lazy" />
+                <img src={proj.img2} alt={`${proj.name} logo`} className={`absolute inset-0 w-full h-full ${(proj as any).img2Class || 'object-cover'}`} loading="lazy" decoding="async" />
               </div>
               <div className="flex-1 rounded-[40px] md:rounded-[50px] overflow-hidden min-h-0 relative bg-black/5 dark:bg-white/5">
-                <img src={proj.img1} alt={`${proj.name} desktop preview`} className={`absolute inset-0 w-full h-full ${(proj as any).img1Class || 'object-cover'}`} loading="lazy" />
+                <img src={proj.img1} alt={`${proj.name} desktop preview`} className={`absolute inset-0 w-full h-full ${(proj as any).img1Class || 'object-cover'}`} loading="lazy" decoding="async" />
               </div>
             </div>
             {/* The right side defaults to img1 (still WebP) and swaps to img3 (GIF) on hover. */}
@@ -557,6 +570,7 @@ function DesktopProjectCard({ proj, i, projectsScrollY, totalProjects }: Desktop
                 alt={`${proj.name} showcase preview`} 
                 className={`absolute inset-0 w-full h-full ${isHovered ? ((proj as any).img3Class || 'object-cover') : ((proj as any).img1Class || 'object-cover')}`} 
                 loading="lazy" 
+                decoding="async"
               />
               {/* Subtle hover overlay prompt to show it's interactive on desktop */}
               {!isHovered && (

@@ -51,6 +51,7 @@ export function GraphicDesignPortfolio() {
                   alt={slide.title} 
                   className="w-full h-auto object-contain block" 
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
             </motion.div>
