@@ -12,12 +12,11 @@ import { InfiniteGrid } from './components/ui/infinite-grid';
 import { LogoCard } from './components/ui/logo-card';
 import Lenis from 'lenis';
 
-// Lazy-load below-the-fold heavy sections to reduce initial JS and TBT
-const GraphicDesignPortfolio = lazy(() => import('./components/ui/graphic-design-portfolio').then(m => ({ default: m.GraphicDesignPortfolio })));
-const ShuffleCards = lazy(() => import('./components/ui/testimonial-cards').then(m => ({ default: m.ShuffleCards })));
-const ContactSection = lazy(() => import('./components/ui/liquid-glass').then(m => ({ default: m.ContactSection })));
-const MultiOrbitSemiCircle = lazy(() => import('./components/ui/multi-orbit-semi-circle'));
-const AnimatedServices = lazy(() => import('./components/ui/animated-services'));
+import { GraphicDesignPortfolio } from './components/ui/graphic-design-portfolio';
+import { ShuffleCards } from './components/ui/testimonial-cards';
+import { ContactSection } from './components/ui/liquid-glass';
+import MultiOrbitSemiCircle from './components/ui/multi-orbit-semi-circle';
+import AnimatedServices from './components/ui/animated-services';
 
 import peaceHavenLogo from './assets/peacehaven/PeaceHavenLOGO.webp';
 import peaceHavenPng from './assets/peacehaven/peacehavenPNG.webp';
@@ -417,14 +416,10 @@ function App() {
       </section>
 
       {/* CREATIVE TOOLKIT (SKILLS) */}
-      <Suspense fallback={null}>
-        <MultiOrbitSemiCircle />
-      </Suspense>
+      <MultiOrbitSemiCircle />
 
       {/* SERVICES SECTION */}
-      <Suspense fallback={null}>
-        <AnimatedServices />
-      </Suspense>
+      <AnimatedServices />
 
       {/* PROJECTS SECTION */}
       <section id="projects" ref={projectsContainerRef} className="bg-main rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 relative z-10 px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32 transition-colors duration-300">
@@ -485,19 +480,13 @@ function App() {
       </section>
 
       {/* GRAPHIC DESIGN PORTFOLIO */}
-      <Suspense fallback={null}>
-        <GraphicDesignPortfolio />
-      </Suspense>
+      <GraphicDesignPortfolio />
 
       {/* TESTIMONIALS SECTION */}
-      <Suspense fallback={null}>
-        <ShuffleCards />
-      </Suspense>
+      <ShuffleCards />
 
       {/* CONTACT/FOOTER SECTION */}
-      <Suspense fallback={null}>
-        <ContactSection />
-      </Suspense>
+      <ContactSection />
     </div>
     </>
   );
