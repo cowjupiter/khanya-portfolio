@@ -281,7 +281,7 @@ function App() {
 
   return (
     <>
-      <LoadingScreen />
+      {!isMobileDevice && <LoadingScreen />}
       <div className="w-full bg-main overflow-x-clip text-textMain transition-colors duration-300">
       <div className="fixed top-6 md:top-8 left-0 right-0 z-50 flex justify-center pointer-events-none">
         <FadeIn delay={0} y={-20} className="pointer-events-auto flex justify-center">
