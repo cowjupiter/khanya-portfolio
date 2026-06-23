@@ -1,4 +1,4 @@
-import { useEffect, useRef, Suspense, lazy, useState } from 'react';
+import { useEffect, useRef, Suspense, lazy, useState, useCallback } from 'react';
 const Spline = lazy(() => import('@splinetool/react-spline'));
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ContactButton } from './components/ContactButton';
@@ -8,6 +8,7 @@ import { FadeIn } from './components/FadeIn';
 import { AnimatedText } from './components/AnimatedText';
 import { ThemeToggle } from './components/ThemeToggle';
 import { NavHeader } from './components/NavHeader';
+import { LoadingScreen } from './components/LoadingScreen';
 import { ShuffleCards } from './components/ui/testimonial-cards';
 import { ContactSection } from './components/ui/liquid-glass';
 import { InfiniteGrid } from './components/ui/infinite-grid';
@@ -192,6 +193,8 @@ const projects = [
 
 function App() {
   const [isMobileDevice, setIsMobileDevice] = useState(() => typeof window !== 'undefined' ? window.innerWidth < 640 : false);
+  const [isLoading, setIsLoading] = useState(true);
+  const handleLoadComplete = useCallback(() => setIsLoading(false), []);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -277,7 +280,9 @@ function App() {
 
 
   return (
-    <div className="w-full bg-main overflow-x-clip text-textMain transition-colors duration-300">
+    <>
+      <LoadingScreen onComplete={handleLoadComplete} />
+      <div className={`w-full bg-main overflow-x-clip text-textMain transition-colors duration-300 ${isLoading ? 'invisible' : 'visible'}`}>
       <div className="fixed top-6 md:top-8 left-0 right-0 z-50 flex justify-center pointer-events-none">
         <FadeIn delay={0} y={-20} className="pointer-events-auto flex justify-center">
           <NavHeader />
@@ -483,6 +488,7 @@ function App() {
       {/* CONTACT/FOOTER SECTION */}
       <ContactSection />
     </div>
+    </>
   );
 }
 
