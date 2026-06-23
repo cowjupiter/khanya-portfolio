@@ -2,6 +2,7 @@ import { useEffect, useRef, Suspense, lazy, useState } from 'react';
 const Spline = lazy(() => import('@splinetool/react-spline'));
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ContactButton } from './components/ContactButton';
+import { GraphicDesignPortfolio } from './components/ui/graphic-design-portfolio';
 import { LiveProjectButton } from './components/LiveProjectButton';
 import { FadeIn } from './components/FadeIn';
 import { AnimatedText } from './components/AnimatedText';
@@ -472,6 +473,9 @@ function App() {
             />
           ))}
       </section>
+
+      {/* GRAPHIC DESIGN PORTFOLIO */}
+      <GraphicDesignPortfolio />
 
       {/* TESTIMONIALS SECTION */}
       <ShuffleCards />
