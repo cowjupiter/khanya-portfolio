@@ -36,7 +36,7 @@ export function GraphicDesignPortfolio() {
 
         {/* Vertical Flow Showcase */}
         <div className="flex flex-col gap-6 sm:gap-10 md:gap-12 w-full">
-          {slides.map((slide, index) => (
+          {slides.map((slide) => (
             <motion.div 
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
