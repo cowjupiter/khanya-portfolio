@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Mail, Phone, Linkedin, ArrowUpRight } from "lucide-react";
+import { Mail, Phone, Linkedin, ArrowUpRight, X } from "lucide-react";
 import { FadeIn } from "../FadeIn";
 
 const Tiktok = (props: React.SVGProps<SVGSVGElement>) => (
@@ -25,6 +25,7 @@ interface GlassEffectProps {
   style?: React.CSSProperties;
   href?: string;
   target?: string;
+  onClick?: () => void;
 }
 
 interface DockIcon {
@@ -40,6 +41,7 @@ export const GlassEffect: React.FC<GlassEffectProps> = ({
   style = {},
   href,
   target = "_blank",
+  onClick,
 }) => {
   const glassStyle = {
     boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.08), 0 0 1px 1px rgba(255, 255, 255, 0.2)",
@@ -78,11 +80,13 @@ export const GlassEffect: React.FC<GlassEffectProps> = ({
   );
 
   return href ? (
-    <a href={href} target={target} rel="noopener noreferrer" className="block select-none">
+    <a href={href} target={target} rel="noopener noreferrer" className="block select-none" onClick={onClick}>
       {content}
     </a>
   ) : (
-    content
+    <div onClick={onClick} className="block select-none" role="button" tabIndex={0}>
+      {content}
+    </div>
   );
 };
 
@@ -111,12 +115,14 @@ export const GlassDock: React.FC<{ icons: DockIcon[] }> = ({ icons }) => (
 );
 
 // Button Component
-export const GlassButton: React.FC<{ children: React.ReactNode; href?: string }> = ({
+export const GlassButton: React.FC<{ children: React.ReactNode; href?: string; onClick?: () => void }> = ({
   children,
   href,
+  onClick,
 }) => (
   <GlassEffect
     href={href}
+    onClick={onClick}
     target={href?.startsWith("mailto:") ? "_self" : "_blank"}
     className="rounded-full px-8 py-5 sm:px-10 sm:py-6 hover:px-9 hover:py-5.5 sm:hover:px-11 sm:hover:py-7 hover:scale-[1.03] overflow-hidden"
   >
@@ -187,6 +193,8 @@ export const GlassFilter: React.FC = () => (
 
 // Re-designed Contact Section incorporating Liquid Glass & Glow Orbs
 export function ContactSection() {
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
   const contactIcons: DockIcon[] = [
     {
       icon: <Mail className="w-6 h-6 sm:w-7 sm:h-7 stroke-[1.5]" />,
@@ -258,9 +266,9 @@ export function ContactSection() {
         <div className="flex flex-col items-center gap-8 sm:gap-10 w-full">
           {/* Glass Button CTA */}
           <FadeIn delay={0.3} y={35}>
-            <GlassButton href="mailto:khanyamoloke@icloud.com">
+            <GlassButton onClick={() => setIsModalOpen(true)}>
               <span className="text-sm sm:text-base font-semibold uppercase tracking-widest">
-                Send Me an Email
+                Start a Project
               </span>
               <ArrowUpRight className="w-5 h-5 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
             </GlassButton>
@@ -291,6 +299,32 @@ export function ContactSection() {
         </div>
 
       </div>
+
+      {/* Form Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm">
+          <div className="relative w-full max-w-4xl h-[85vh] bg-main rounded-[30px] border border-white/10 shadow-2xl overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-300">
+            {/* Header */}
+            <div className="flex justify-between items-center p-4 sm:p-5 border-b border-white/10 bg-white/5">
+              <span className="font-semibold uppercase tracking-widest text-xs sm:text-sm ml-2">Project Inquiry Form</span>
+              <button 
+                onClick={() => setIsModalOpen(false)}
+                className="p-2 hover:bg-white/10 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            {/* Iframe */}
+            <iframe 
+              src="https://docs.google.com/forms/d/e/1FAIpQLScA_u9VtOai5gd63kk70-_EGS805sMzHOUJQ9p2zQTjax0KMA/viewform?embedded=true" 
+              className="w-full flex-1 border-none bg-white"
+              title="Project Intake Form"
+            >
+              Loading…
+            </iframe>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
